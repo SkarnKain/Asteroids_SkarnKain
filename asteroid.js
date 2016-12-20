@@ -3,7 +3,7 @@
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/hacZU523FyM
 
-function Asteroid(pos, r) {
+function Asteroid(pos, r, ast_angle, ast_angle_speed) {
     if (pos) {
     this.pos = pos.copy();
   } else {
@@ -18,8 +18,20 @@ function Asteroid(pos, r) {
   } else {
     this.r = random(level + 10, level * 5 + 10);
     if (this.r > 100){
-        this.r = 100
+        this.r = 100;
     }
+  }
+    
+  if (ast_angle) {
+    this.ast_angle = ast_angle;
+  } else {
+    this.ast_angle = random(0, TWO_PI);
+  }
+    
+  if (ast_angle_speed) {
+    this.ast_angle_speed = ast_angle_speed;
+  } else {
+    this.ast_angle_speed = random(-0.05, 0.05);
   }
 
   this.vel = p5.Vector.random2D();
@@ -39,6 +51,7 @@ function Asteroid(pos, r) {
     strokeWeight(1);
     stroke(30, 10, 0);
     translate(this.pos.x, this.pos.y);
+    rotate(this.ast_angle);      
     ellipse(0, 0, this.r);
     strokeWeight(1);
     stroke(160, 140, 120);
@@ -73,5 +86,16 @@ function Asteroid(pos, r) {
       this.pos.y = height + this.r;
     }
   }
+  
+  this.ast_rotate = function() {
+    this.ast_angle += this.ast_angle_speed;
+    if (this.ast_angle > TWO_PI){
+        this.ast_angle = 0;
+    }
+    if (this.ast_angle < 0){
+        this.ast_angle = TWO_PI;
+    }
+  }
+  
 
 }
