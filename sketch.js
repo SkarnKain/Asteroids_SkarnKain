@@ -79,6 +79,7 @@ function draw() {
     asteroids[i].render();
     if (!beginnning) {
         asteroids[i].update();
+        asteroids[i].ast_rotate();
     }
     asteroids[i].edges();
   }
