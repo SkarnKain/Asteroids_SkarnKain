@@ -32,7 +32,6 @@ function Ship() {
     rotate(this.heading + PI / 2);
     noFill();
     this.rand_flam = random(-5,5);
-    console.log(this.rand_flam);
     stroke(255, 0, 0);
     triangle(-this.r/2, this.r, this.r/2, this.r, 0, this.r * 2 + this.rand_flam);
     stroke(255, 133, 0);
