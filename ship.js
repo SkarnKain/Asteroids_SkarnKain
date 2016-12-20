@@ -31,12 +31,14 @@ function Ship() {
     translate(this.pos.x, this.pos.y);
     rotate(this.heading + PI / 2);
     noFill();
+    this.rand_flam = random(-5,5);
+    console.log(this.rand_flam);
     stroke(255, 0, 0);
-    triangle(-this.r/2, this.r, this.r/2, this.r, 0, this.r * 2);
+    triangle(-this.r/2, this.r, this.r/2, this.r, 0, this.r * 2 + this.rand_flam);
     stroke(255, 133, 0);
-    triangle(-this.r/3, this.r, this.r/3, this.r, 0, this.r * 1.666666);
+    triangle(-this.r/3, this.r, this.r/3, this.r, 0, this.r * 1.666666 + this.rand_flam);
     stroke(255, 255, 0);
-    triangle(-this.r/5, this.r, this.r/5, this.r, 0, this.r * 1.3);
+    triangle(-this.r/5, this.r, this.r/5, this.r, 0, this.r * 1.3 + this.rand_flam);
     pop();
   }
 
