@@ -35,6 +35,8 @@ function Asteroid(pos, r, ast_angle, ast_angle_speed) {
   }
 
   this.vel = p5.Vector.random2D();
+  this.vel.x *= random(10,20) * 1 / this.r;
+  this.vel.y *= random(10,20) * 1 / this.r;;
   this.total = floor(random(5, 15));
   this.offset = [];
   for (var i = 0; i < this.total; i++) {
