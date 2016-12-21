@@ -3,8 +3,13 @@
 // http://patreon.com/codingrainbow
 // Code for: https://youtu.be/hacZU523FyM
 
-function Ship() {
+function Ship(pos) {
+  
+  if (pos) {
+    this.pos = pos.copy();
+  } else {
   this.pos = createVector(width / 2, height / 2);
+  }
   this.r = 15;
   this.heading = 0;
   this.rotation = 0;
