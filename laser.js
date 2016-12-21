@@ -65,6 +65,4 @@ function Laser(spos, sangle, ssize) {
     }
     return false;
   }
-
-
 }
