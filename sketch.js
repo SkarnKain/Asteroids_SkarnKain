@@ -7,7 +7,9 @@ var ship;
 var asteroids = [];
 var lasers = [];
 var stars = [];
+var dust = [];
 var score = 0;
+var bestscore = 0;
 var level = 1;
 var test = false;
 var dead = false;
@@ -19,7 +21,10 @@ var pause_time = 2000;
 
 function setup() {
     //createCanvas(windowWidth, windowHeight);
-    createCanvas(640, 480);
+    
+    if (!ship){
+        createCanvas(640, 480);
+    }
     colorMode(RGB);
     first_beginnning = true;
     asteroids = [];
@@ -30,12 +35,14 @@ function setup() {
       level = 1;
       dead = false;
     }
-    ship = new Ship();
     
+    if (!ship){
+        ship = new Ship();
+    }
     for (var i = 0; i < 30; i++) {
         stars.push(new Star());
     }
-    
+
     for (var i = 0; i < level; i++) {
         asteroids.push(new Asteroid());
     }
@@ -48,6 +55,11 @@ function draw() {
   fill(200, 200, 200);
   textAlign(RIGHT);
   text("Score : " + score, width - 20, height - 20);
+  if (score > bestscore) {
+    bestscore = score;    
+  }
+  textAlign(LEFT);
+  text("Best : " + bestscore, 20, height - 20);
   fill(30, 30, 30);
   textSize(40);
   textAlign(CENTER);
@@ -69,12 +81,12 @@ function draw() {
   for (var i = 0; i < asteroids.length; i++) {
     if (ship.hits(asteroids[i])) {
         dead = true;
+        ship = new Ship();
         setup();
         break;
     }
     if (ship.closeenough(asteroids[i])) {
         score = score + level;
-        //break;
     }
     asteroids[i].render();
     if (!beginnning) {
@@ -94,8 +106,10 @@ function draw() {
       lasers.splice(i, 1);
     } else {
       for (var j = asteroids.length - 1; j >= 0; j--) {
-        //if (lasers[i].hits(asteroids[j]) || test == true) {
         if (lasers[i].hits(asteroids[j])) {
+          var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), asteroids[j].vel);
+          var dustNum = (asteroids[j].r + 1) * 5;
+          addDust(asteroids[j].pos, dustVel, dustNum);
           if (asteroids[j].r > 10) {
             var newAsteroids = asteroids[j].breakup();
             asteroids = asteroids.concat(newAsteroids);
@@ -121,6 +135,17 @@ function draw() {
     ship.update();
   }
   ship.edges();
+
+  for (var i = dust.length - 1; i >= 0; i--) {
+    dust[i].update();
+    if (dust[i].transparency <= 0) {
+      dust.splice(i, 1);
+    }
+  }    
+ 
+  for (var i = dust.length - 1; i >= 0; i--) {
+    dust[i].render();
+  } 
 }
 
 function keyReleased() {
@@ -144,8 +169,6 @@ function keyPressed() {
         ship.setRotation(-0.1);
     } else if (keyCode == UP_ARROW) {
         ship.boosting(true);
-//    } else if (keyCode == 83) {
-//        test = true;
     }
 }
 
