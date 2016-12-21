@@ -7,10 +7,12 @@ function Asteroid(pos, r, ast_angle, ast_angle_speed) {
     if (pos) {
     this.pos = pos.copy();
   } else {
-    var rand_r = random(height/4, height/1);
-    var rand_theta = random(0, TWO_PI);
-    var rand_x = rand_r * cos(rand_theta) + width / 2;
-    var rand_y = rand_r * sin(rand_theta) + height / 2;
+    do {
+        var rand_r = random(100, height);
+        var rand_theta = random(0, TWO_PI);
+        var rand_x = rand_r * cos(rand_theta) + ship.pos.x;
+        var rand_y = rand_r * sin(rand_theta) + ship.pos.y;
+    } while (rand_x < 0 || rand_x > width || rand_y < 0 || rand_y > height)
     this.pos = createVector(rand_x, rand_y);
   }
   if (r) {
@@ -35,8 +37,8 @@ function Asteroid(pos, r, ast_angle, ast_angle_speed) {
   }
 
   this.vel = p5.Vector.random2D();
-  this.vel.x *= random(10,20) * 1 / this.r;
-  this.vel.y *= random(10,20) * 1 / this.r;;
+  this.vel.x *= random(3,6) / Math.sqrt(this.r);
+  this.vel.y *= random(3,6) / Math.sqrt(this.r);
   this.total = floor(random(5, 15));
   this.offset = [];
   for (var i = 0; i < this.total; i++) {
