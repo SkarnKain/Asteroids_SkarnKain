@@ -26,6 +26,7 @@ var colors = [
 ]
 
 
+
 function Laser(spos, sangle, ssize) {
   this.vel = p5.Vector.fromAngle(sangle);
   this.vel.mult(10);
@@ -50,6 +51,15 @@ function Laser(spos, sangle, ssize) {
   this.hits = function(asteroid) {
     var d = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y);
     if (d < asteroid.r) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  this.hits_ovni = function(ovni) {
+    var d = dist(this.pos.x, this.pos.y, ovni.pos.x, ovni.pos.y);
+    if (d < ovni.size) {
       return true;
     } else {
       return false;

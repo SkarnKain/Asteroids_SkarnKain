@@ -4,6 +4,10 @@
 // Code for: https://youtu.be/hacZU523FyM
 
 var ship;
+var ovni = [];
+var lasers_ovni = [];
+var frame;
+var ovni_shooting_time = 300;
 var asteroids = [];
 var lasers = [];
 var stars = [];
@@ -20,16 +24,19 @@ var pause_time = 2000;
 
 
 function setup() {
-    //createCanvas(windowWidth, windowHeight);
     
     if (!ship){
-        createCanvas(640, 480);
+        //createCanvas(800, 600);
+        createCanvas(windowWidth, windowHeight);
     }
     colorMode(RGB);
     first_beginnning = true;
     asteroids = [];
     lasers = [];
     stars = [];
+    ovni = [];
+    lasers_ovni = [];
+    frame = 1;
     if (dead == true){
       score = 0;
       level = 1;
@@ -45,6 +52,10 @@ function setup() {
 
     for (var i = 0; i < level; i++) {
         asteroids.push(new Asteroid());
+    }
+    
+    for (var i = 0; i < level; i++) {
+        ovni.push(new Ovni());
     }
 }
 
@@ -63,8 +74,13 @@ function draw() {
   fill(30, 30, 30);
   textSize(40);
   textAlign(CENTER);
+  textStyle(BOLD);
   text("LEVEL " + level, floor(width / 2), floor(height / 2));
   pop();
+
+  if (!beginnning) {
+    frame += 1;
+  }
     
   for (var i = 0; i < stars.length; i++) {
         stars[i].render();
@@ -117,13 +133,69 @@ function draw() {
           asteroids.splice(j, 1);
           lasers.splice(i, 1);
           score = score + level * 100;
-          test = false;
           break;
         }
       }
     }
   }
 
+  for (var i = lasers.length - 1; i >= 0; i--) {
+      for (var j = ovni.length - 1; j >= 0; j--) {
+        if (lasers[i].hits_ovni(ovni[j])) {
+          var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), ovni[j].vel);
+          var dustNum = (ovni[j].size + 1) * 5;
+          addDust(ovni[j].pos, dustVel, dustNum);
+          ovni.splice(j, 1);
+          lasers.splice(i, 1);
+          score = score + level * 1000;
+          break;
+        }
+      }
+  }
+
+    
+  
+
+ for (var i = ovni.length - 1; i >= 0; i--) {
+    
+    if (ship.hits_ovni(ovni[i])) {
+        dead = true;
+        ship = new Ship();
+        setup();
+        break;
+    }
+    if (!beginnning) {
+        ovni[i].update();
+    }
+    ovni[i].edges();
+    ovni[i].render();
+ }
+
+  if (frame / ovni_shooting_time == floor(frame / ovni_shooting_time)) {
+      for (var i = ovni.length - 1; i >= 0; i--) {
+          var angle_laser = convert_theta(ship.pos.x, ship.pos.y, ovni[i].pos.x, ovni[i].pos.y);
+          lasers_ovni.push(new Laser_ovni(ovni[i].pos, angle_laser, ovni[i].size));
+      }
+  }
+
+  for (var i = lasers_ovni.length - 1; i >= 0; i--) {
+    
+    if (!beginnning) {
+        lasers_ovni[i].render();
+        lasers_ovni[i].update();
+    }
+    if (lasers_ovni[i].offscreen()) {
+      lasers_ovni.splice(i, 1);
+    } else {
+    if (lasers_ovni[i].hits(ship)) {
+        dead = true;
+        ship = new Ship();
+        setup();
+        break;
+        }
+    }
+  }
+    
   if (asteroids.length == 0){
       level ++;
       setup();
@@ -176,4 +248,21 @@ function begin_level() {
    currentTime = new Date().getTime();
    first_beginnning = false;
    beginnning = true;
+}
+
+function convert_theta(x1, y1, x2, y2) {
+    this.x = x1 - x2;
+    this.y = y1 - y2;
+    if (this.x > 0 && this.y >= 0){
+        this.theta = atan(y / x);
+    } else if (this.x > 0 && this.y < 0){
+        this.theta = atan(y / x) + TWO_PI;
+    } else if (this.x < 0){
+        this.theta = atan(y / x) + PI;
+    } else if (this.x = 0 && this.y > 0){
+        this.theta = PI / 2;
+    } else if (this.x = 0 && this.y < 0){
+        this.theta = 3 * PI / 2;
+    }
+return theta;
 }
