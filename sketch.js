@@ -153,8 +153,6 @@ function draw() {
       }
   }
 
-    
-  
 
  for (var i = ovni.length - 1; i >= 0; i--) {
     
@@ -196,7 +194,7 @@ function draw() {
     }
   }
     
-  if (asteroids.length == 0){
+  if (asteroids.length == 0 && ovni.length == 0){
       level ++;
       setup();
   }  
