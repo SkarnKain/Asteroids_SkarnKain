@@ -13,25 +13,19 @@ function Ovni(pos) {
   this.pos = createVector(x_ovni, y_ovni);
   this.size = 10;
   if (x_ovni == 0){
-      this.vel = createVector(3, 0);
+      var temp_vel = random(-1, 1);
+      this.vel = createVector(3, temp_vel);
     } else {
-      this.vel = createVector(-3, 0);
+      this.vel = createVector(-3, temp_vel);
     }
   }
 
   this.update = function() {
+    var reminder_vel = this.vel.y;
+    this.vel.y += random([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, -1]);
     this.pos.add(this.vel);
+    this.vel.y = reminder_vel;
   }
-
-//  this.hits = function(asteroid) {
-//    var d = dist(this.pos.x, this.pos.y, asteroid.pos.x, asteroid.pos.y);
-//    if (d < this.r / 2 + asteroid.r / 2) {
-//      return true;
-//    } else {
-//      return false;
-//    }
-//  }
-//  
 
   this.render = function() {
     push();
@@ -39,6 +33,7 @@ function Ovni(pos) {
     noFill();
     stroke(255);
     ellipse(0, 0, this.size * 3, this.size);
+    stroke(105, 170, 240);
     ellipse(0, - this.size / 2, this.size, this.size / 2);
     pop();
   }

@@ -4,17 +4,10 @@
 // Code for: https://youtu.be/hacZU523FyM
 
 
-var colors_ovni = [
-  [255, 0, 0],
-  [255, 90, 50],
-  [255, 90, 90]
-]
-
-
 function Laser_ovni(spos, sangle, ssize) {
   this.vel = p5.Vector.fromAngle(sangle);
   this.vel.mult(7);
-  this.colors_ovni = colors_ovni[floor(random(0, colors_ovni.length - 1))];
+  this.colors_ovni = floor(random(0, 30));
   var decal_x = ssize * cos(sangle) + this.vel.x;
   var decal_y = ssize * sin(sangle) + this.vel.y;
   this.pos = createVector(spos.x + decal_x, spos.y + decal_y );
@@ -25,7 +18,8 @@ function Laser_ovni(spos, sangle, ssize) {
   
   this.render = function() {
     push();
-    stroke(this.colors_ovni[0], this.colors_ovni[1], this.colors_ovni[2]);
+    colorMode(HSB);
+    stroke(this.colors_ovni, 100, 50);
     strokeWeight(2);
     line(this.pos.x - this.vel.x, this.pos.y - this.vel.y, this.pos.x, this.pos.y);
     pop();

@@ -4,33 +4,10 @@
 // Code for: https://youtu.be/hacZU523FyM
 
 
-var colors = [
-  [248, 12, 18],
-  [238, 17, 0],
-  [255, 51, 17],
-  [255, 68, 34],
-  [255, 102, 68],
-  [255, 153, 51],
-  [254, 174, 45],
-  [204, 187, 51],
-  [208, 195, 16],
-  [170, 204, 34],
-  [105, 208, 37],
-  [34, 204, 170],
-  [18, 189, 185],
-  [17, 170, 187],
-  [68, 68, 221],
-  [51, 17, 187],
-  [59, 12, 189],
-  [68, 34, 153]
-]
-
-
-
 function Laser(spos, sangle, ssize) {
   this.vel = p5.Vector.fromAngle(sangle);
   this.vel.mult(10);
-  this.color = colors[floor(random(0, colors.length - 1))];
+  this.color = floor(random(120, 170));
   var decal_x = ssize * cos(sangle) + this.vel.x;
   var decal_y = ssize * sin(sangle) + this.vel.y;
   this.pos = createVector(spos.x + decal_x, spos.y + decal_y );
@@ -41,10 +18,10 @@ function Laser(spos, sangle, ssize) {
   
   this.render = function() {
     push();
-    stroke(this.color[0], this.color[1], this.color[2]);
+    colorMode(HSB);
+    stroke(this.color, 100, 100);
     strokeWeight(2);
     line(this.pos.x - this.vel.x, this.pos.y - this.vel.y, this.pos.x, this.pos.y);
-    //point(this.pos.x, this.pos.y);
     pop();
   }
 

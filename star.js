@@ -14,7 +14,7 @@ function Star(pos, size, color) {
   if (color) {
     this.color = color.copy();
   } else {
-    this.color = floor(random(0, 55));
+    this.color = floor(random(0, 255));
   }
 
   this.render = function() {
@@ -22,7 +22,7 @@ function Star(pos, size, color) {
     noFill();
     strokeWeight(1);
     colorMode(HSB);
-    stroke(this.color, 100, 20);
+    stroke(this.color, 100, 15);
     translate(this.pos.x, this.pos.y);
     line(-this.size, 0, this.size, 0);
     line(0, -this.size, 0, this.size);
