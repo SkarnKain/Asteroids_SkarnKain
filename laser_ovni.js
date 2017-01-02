@@ -20,7 +20,7 @@ function Laser_ovni(spos, sangle, ssize) {
     push();
     colorMode(HSB);
     stroke(this.colors_ovni, 100, 50);
-    strokeWeight(2);
+    strokeWeight(3);
     line(this.pos.x - this.vel.x, this.pos.y - this.vel.y, this.pos.x, this.pos.y);
     pop();
   }

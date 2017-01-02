@@ -10,7 +10,7 @@ function Ship(pos) {
   } else {
   this.pos = createVector(width / 2, height / 2);
   }
-  this.r = 15;
+  this.r = 20;
   this.heading = 0;
   this.rotation = 0;
   this.vel = createVector(0, 0);
@@ -82,21 +82,26 @@ function Ship(pos) {
     ellipse(0, 0, this.r);
     stroke(255);
     
-    
     beginShape();
-    var x = 0; var y = -this.r; vertex(x, y);
-    var x = this.r / 2; var y = -this.r / 2; vertex(x, y);
-    var x = this.r / 2; var y = -this.r / 5; vertex(x, y);
-    var x = this.r; var y = this.r / 2; vertex(x, y);
-    var x = this.r / 2; var y = this.r / 2; vertex(x, y);
-    var x = this.r / 2; var y = this.r; vertex(x, y);
-    var x = -this.r / 2; var y = this.r; vertex(x, y);
-    var x = -this.r / 2; var y = this.r / 2; vertex(x, y);  
-    var x = -this.r; var y = this.r / 2; vertex(x, y); 
-    var x = -this.r / 2; var y = -this.r / 5; vertex(x, y);
-    var x = -this.r / 2; var y = -this.r / 2; vertex(x, y);     
+        var x = 0; var y = -this.r; vertex(x, y);
+        var x = this.r / 2; var y = -this.r / 2; vertex(x, y);
+        var x = this.r / 2; var y = -this.r / 5; vertex(x, y);
+        var x = this.r; var y = this.r / 2; vertex(x, y);
+        var x = this.r / 2; var y = this.r / 2; vertex(x, y);
+        var x = this.r / 2; var y = this.r; vertex(x, y);
+        var x = -this.r / 2; var y = this.r; vertex(x, y);
+        var x = -this.r / 2; var y = this.r / 2; vertex(x, y);  
+        var x = -this.r; var y = this.r / 2; vertex(x, y); 
+        var x = -this.r / 2; var y = -this.r / 5; vertex(x, y);
+        var x = -this.r / 2; var y = -this.r / 2; vertex(x, y);     
     endShape(CLOSE);
     
+    var x1 = this.r / 2; var y1 = -this.r / 5;
+    var x2 = this.r / 2; var y2 = this.r / 2;
+    line(x1, y1, x2, y2);
+    var x1 = -this.r / 2; var y1 = this.r / 2;
+    var x2 = -this.r / 2; var y2 = -this.r / 5;
+    line(x1, y1, x2, y2);
     //triangle(-this.r, this.r, this.r, this.r, 0, -this.r);
     pop();
   }

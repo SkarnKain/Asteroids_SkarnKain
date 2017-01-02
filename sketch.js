@@ -101,7 +101,7 @@ function draw() {
         dead = true;
         var dustVel = ship.vel;
         var dustNum = 100;
-        addDust(ship.pos, dustVel, dustNum);
+        addDust(ship.pos, dustVel, 0, 1, 0.2, dustNum);
         ship = new Ship();
         setup();
         break;
@@ -130,7 +130,7 @@ function draw() {
         if (lasers[i].hits(asteroids[j])) {
           var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), asteroids[j].vel);
           var dustNum = (asteroids[j].r + 1) * 1;
-          addDust(asteroids[j].pos, dustVel, dustNum);
+          addDust(asteroids[j].pos, dustVel, 0.8, 0.5, 0.2, dustNum);
           if (asteroids[j].r > 10) {
             var newAsteroids = asteroids[j].breakup();
             asteroids = asteroids.concat(newAsteroids);
@@ -149,7 +149,7 @@ function draw() {
         if (lasers[i].hits_ovni(ovni[j])) {
           var dustVel = p5.Vector.add(lasers[i].vel.mult(0.2), ovni[j].vel);
           var dustNum = (ovni[j].size + 1) * 5;
-          addDust(ovni[j].pos, dustVel, dustNum);
+          addDust(ovni[j].pos, dustVel, 1, 0, 0, dustNum);
           ovni.splice(j, 1);
           lasers.splice(i, 1);
           score = score + level * 500;
@@ -165,7 +165,7 @@ function draw() {
         dead = true;
         var dustVel = ship.vel;
         var dustNum = 100;
-        addDust(ship.pos, dustVel, dustNum);
+        addDust(ship.pos, dustVel, 0, 1, 0.2, dustNum);
         ship = new Ship();
         setup();
         break;
@@ -197,7 +197,7 @@ function draw() {
         dead = true;
         var dustVel = ship.vel;
         var dustNum = 100;
-        addDust(ship.pos, dustVel, dustNum);
+        addDust(ship.pos, dustVel, 0, 1, 0.2, dustNum);
         ship = new Ship();
         setup();
         break;
